@@ -71,12 +71,12 @@ def foodpage():
     client = pymongo.MongoClient(conn)
 
     db = client.heroku_3t530jfl
-    food_items = db.wine_db.find({}, {'_id': False, 'food_pairing': True})
+    food_items = db.wine_db.find({}, {'_id': 0, 'food_pairing': True})
     food_list = pd.DataFrame(list(food_items))
 
 
     # """Return the homepage."""
-    return render_template("food.html", food_list=food_list['food_pairing'].unique())
+    return render_template("food.html")
 
 @app.route("/yummy/<selected_food>")
 def foodchart(selected_food):
