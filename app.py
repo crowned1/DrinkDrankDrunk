@@ -71,7 +71,7 @@ def foodpage():
     client = pymongo.MongoClient(conn)
 
     db = client.heroku_3t530jfl
-    food_items = db.wine_db.find({}, {'_id': 0, 'food_pairing': True})
+    food_items = db.wine_db.find({}, {'_id': 0})
     food_list = pd.DataFrame(list(food_items))
 
 
