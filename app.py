@@ -5,11 +5,14 @@ import re
 
 app = Flask(__name__)
 
+conn = 'mongodb://test:password1@ds123444.mlab.com:23444/heroku_3t530jfl'
+client = pymongo.MongoClient(conn)
+#extract to DB
+db = client.heroku_3t530jfl
 
 @app.route("/")
 def index():
    # """Return the homepage."""
-   
     return render_template("index.html")
 
 
@@ -22,11 +25,6 @@ def budgetpage():
 @app.route("/price/<selected_budget>")
 def winebudget(selected_budget):
     #create mongodb connection
-    conn = 'mongodb://test:password1@ds123444.mlab.com:23444/heroku_3t530jfl'
-    client = pymongo.MongoClient(conn)
-
-    #extract to DB
-    db = client.heroku_3t530jfl
     wine_collections = db.wine_db.find({}, {'_id': 0})
     df = pd.DataFrame(list(wine_collections))
 
@@ -67,24 +65,14 @@ def drunkpage():
 
 @app.route("/food")
 def foodpage():
-    conn = 'mongodb://test:password1@ds123444.mlab.com:23444/heroku_3t530jfl'
-    client = pymongo.MongoClient(conn)
-
-    db = client.heroku_3t530jfl
     food_items = db.wine_db.find({}, {'_id': 0})
     food_list = pd.DataFrame(list(food_items))
-
 
     # """Return the homepage."""
     return render_template("food.html")
 
 @app.route("/yummy/<selected_food>")
 def foodchart(selected_food):
-
-    conn = 'mongodb://test:password1@ds123444.mlab.com:23444/heroku_3t530jfl'
-    client = pymongo.MongoClient(conn)
-
-    db = client.heroku_3t530jfl
     food_choice = db.wine_db.find({'food_pairing': re.compile('^' + re.escape(selected_food) + '$', re.IGNORECASE)}, {'_id': False})
     food_list = list(food_choice)
 
