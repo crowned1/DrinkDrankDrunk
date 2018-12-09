@@ -5,11 +5,6 @@ import re
 
 app = Flask(__name__)
 
-conn = 'mongodb://test:password1@ds123444.mlab.com:23444/heroku_3t530jfl'
-client = pymongo.MongoClient(conn)
-#extract to DB
-db = client.heroku_3t530jfl
-
 @app.route("/")
 def index():
    # """Return the homepage."""
@@ -24,6 +19,10 @@ def budgetpage():
    
 @app.route("/price/<selected_budget>")
 def winebudget(selected_budget):
+    conn = 'mongodb://test:password1@ds123444.mlab.com:23444/heroku_3t530jfl'
+    client = pymongo.MongoClient(conn)
+    #extract to DB
+    db = client.heroku_3t530jfl
     #create mongodb connection
     wine_collections = db.wine_db.find({}, {'_id': 0})
     df = pd.DataFrame(list(wine_collections))
@@ -65,8 +64,8 @@ def drunkpage():
 
 @app.route("/food")
 def foodpage():
-    food_items = db.wine_db.find({}, {'_id': 0})
-    food_list = pd.DataFrame(list(food_items))
+#     food_items = db.wine_db.find({}, {'_id': 0})
+#     food_list = pd.DataFrame(list(food_items))
 
     # """Return the homepage."""
     return render_template("food.html")
