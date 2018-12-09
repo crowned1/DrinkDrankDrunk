@@ -64,6 +64,10 @@ def drunkpage():
 
 @app.route("/food")
 def foodpage():
+    conn = 'mongodb://test:password1@ds123444.mlab.com:23444/heroku_3t530jfl'
+    client = pymongo.MongoClient(conn)
+    #extract to DB
+    db = client.heroku_3t530jfl
 #     food_items = db.wine_db.find({}, {'_id': 0})
 #     food_list = pd.DataFrame(list(food_items))
 
