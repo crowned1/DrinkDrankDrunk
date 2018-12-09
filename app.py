@@ -66,13 +66,14 @@ def drunkpage():
 def foodpage():
     conn = 'mongodb://test:password1@ds123444.mlab.com:23444/heroku_3t530jfl'
     client = pymongo.MongoClient(conn)
-    #extract to DB
+
     db = client.heroku_3t530jfl
-#     food_items = db.wine_db.find({}, {'_id': 0})
-#     food_list = pd.DataFrame(list(food_items))
+    food_items = db.wine_db.find({}, {'_id': False, 'food_pairing': True})
+    food_list = pd.DataFrame(list(food_items))
+
 
     # """Return the homepage."""
-    return render_template("food.html")
+    return render_template("food.html", food_list=food_list['food_pairing'].unique())
 
 @app.route("/yummy/<selected_food>")
 def foodchart(selected_food):
